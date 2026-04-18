@@ -27,3 +27,9 @@ make build IMAGE=openclaw VERSION=0.1.0 BUILD_ARGS="OPENCLAW_VERSION=2026.4.15 L
 ```sh
 make release IMAGE=openclaw TAGS=latest
 ```
+
+## Scan
+
+```sh
+make scan IMAGE=openclaw VERSION=0.1.0
+```

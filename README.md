@@ -72,6 +72,20 @@ List available images:
 make list
 ```
 
+Scan a built image for vulnerabilities:
+
+```sh
+make scan IMAGE=alpine-tools VERSION=0.1.0
+```
+
+Fail the command when findings match the configured severity:
+
+```sh
+make scan IMAGE=alpine-tools VERSION=0.1.0 SCAN_EXIT_CODE=1
+```
+
+By default, scanning uses Trivy with `SEVERITY=HIGH,CRITICAL` and `IGNORE_UNFIXED=1`. JSON reports are written under `tmp/scans/`.
+
 ## Image Metadata
 
 Every image has an `image.env` file:

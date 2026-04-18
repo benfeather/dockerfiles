@@ -7,8 +7,12 @@ BASE ?= alpine:latest
 BUILD_ARGS ?=
 NO_CACHE ?=
 PULL ?=
+SEVERITY ?= HIGH,CRITICAL
+IGNORE_UNFIXED ?= 1
+SCANNER_IMAGE ?= aquasec/trivy:latest
+SCAN_EXIT_CODE ?= 0
 
-.PHONY: help list new tags build push release lint check-image check-version
+.PHONY: help list new tags build push release scan lint check-image check-version
 
 help:
 	@printf '%s\n' \
@@ -19,6 +23,7 @@ help:
 		'  make build IMAGE=name VERSION=x [TAGS=...] [BUILD_ARGS=...] [NO_CACHE=1] [PULL=1] Build locally' \
 		'  make push IMAGE=name [VERSION=x] [TAGS=...] Push existing local tags and record version' \
 		'  make release IMAGE=name [VERSION=x] [TAGS=...] [BUILD_ARGS=...] [NO_CACHE=1] [PULL=1] Build, push, and record next version' \
+		'  make scan IMAGE=name VERSION=x [SEVERITY=HIGH,CRITICAL] [SCAN_EXIT_CODE=0] Scan image with Trivy' \
 		'  make lint                                  Run hadolint when installed'
 
 list:
@@ -38,6 +43,9 @@ push: check-image
 
 release: check-image
 	@TAGS="$(TAGS)" EXTRA_BUILD_ARGS="$(BUILD_ARGS)" NO_CACHE="$(NO_CACHE)" PULL="$(PULL)" scripts/release.sh "$(IMAGE)" "$(VERSION)"
+
+scan: check-image check-version
+	@SEVERITY="$(SEVERITY)" IGNORE_UNFIXED="$(IGNORE_UNFIXED)" SCANNER_IMAGE="$(SCANNER_IMAGE)" SCAN_EXIT_CODE="$(SCAN_EXIT_CODE)" scripts/scan.sh "$(IMAGE)" "$(VERSION)"
 
 lint:
 	@if command -v hadolint >/dev/null 2>&1; then \
