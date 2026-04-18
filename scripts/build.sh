@@ -21,6 +21,7 @@ load_image_config "$IMAGE"
 require_command docker
 append_tag_flags "$VERSION"
 append_build_arg_flags
+append_cache_flags
 
 BUILD_PLATFORM="${BUILD_PLATFORM:-${PLATFORMS%%,*}}"
 
@@ -29,6 +30,7 @@ docker buildx build \
   --load \
   --platform "$BUILD_PLATFORM" \
   -f "$ROOT_DIR/$DOCKERFILE" \
+  "${CACHE_FLAGS[@]}" \
   "${BUILD_ARG_FLAGS[@]}" \
   "${TAG_FLAGS[@]}" \
   "$ROOT_DIR/$CONTEXT"

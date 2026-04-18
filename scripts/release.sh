@@ -22,12 +22,14 @@ require_command docker
 VERSION="$(resolve_release_version "$VERSION")"
 append_tag_flags "$VERSION"
 append_build_arg_flags
+append_cache_flags
 
 printf 'Building and pushing %s:%s for %s\n' "$IMAGE" "$VERSION" "$PLATFORMS"
 docker buildx build \
   --push \
   --platform "$PLATFORMS" \
   -f "$ROOT_DIR/$DOCKERFILE" \
+  "${CACHE_FLAGS[@]}" \
   "${BUILD_ARG_FLAGS[@]}" \
   "${TAG_FLAGS[@]}" \
   "$ROOT_DIR/$CONTEXT"

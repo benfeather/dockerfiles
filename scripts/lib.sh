@@ -111,6 +111,18 @@ append_build_arg_flags() {
   done
 }
 
+append_cache_flags() {
+  CACHE_FLAGS=()
+
+  case "${NO_CACHE:-}" in
+    1|true|TRUE|yes|YES) CACHE_FLAGS+=("--no-cache") ;;
+  esac
+
+  case "${PULL:-}" in
+    1|true|TRUE|yes|YES) CACHE_FLAGS+=("--pull") ;;
+  esac
+}
+
 current_image_version() {
   if [ -f "$VERSION_FILE" ]; then
     tr -d '[:space:]' < "$VERSION_FILE"

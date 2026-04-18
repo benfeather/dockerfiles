@@ -1,10 +1,12 @@
-FROM ghcr.io/openclaw/openclaw@sha256:9d5f1dfbd5deedc37706c78f745b958ffbe9b4f20840cfb4d49c617a50326902
+ARG OPENCLAW_VERSION=2026.4.15
+
+FROM ghcr.io/openclaw/openclaw:${OPENCLAW_VERSION}
 
 ARG IMAGE_VERSION=dev
-ARG FFMPEG_VERSION=7:5.1.8-0+deb12u1
-ARG SUMMARIZE_VERSION=0.13.0
-ARG CLAWHUB_VERSION=0.9.0
-ARG LOSSLESS_CLAW_VERSION=0.9.1
+ARG FFMPEG_VERSION=7:*
+ARG SUMMARIZE_VERSION=0
+ARG CLAWHUB_VERSION=0
+ARG LOSSLESS_CLAW_VERSION=0
 
 LABEL org.opencontainers.image.title="openclaw" \
       org.opencontainers.image.description="OpenClaw runtime image with ffmpeg and helper CLIs installed" \
