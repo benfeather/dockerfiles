@@ -51,6 +51,7 @@ load_image_config() {
   PLATFORMS="${PLATFORMS:-linux/amd64}"
   DEFAULT_TAGS="${DEFAULT_TAGS:-}"
   BUILD_ARGS="${BUILD_ARGS:-}"
+  EXTRA_BUILD_ARGS="${EXTRA_BUILD_ARGS:-}"
 
   [ -f "$ROOT_DIR/$DOCKERFILE" ] || fail "Dockerfile not found: $DOCKERFILE"
   [ -d "$ROOT_DIR/$CONTEXT" ] || fail "context folder not found: $CONTEXT"
@@ -104,7 +105,7 @@ append_build_arg_flags() {
   local arg
 
   BUILD_ARG_FLAGS=("--build-arg" "IMAGE_VERSION=$VERSION")
-  for arg in $BUILD_ARGS; do
+  for arg in $BUILD_ARGS $EXTRA_BUILD_ARGS; do
     [ -n "$arg" ] || continue
     BUILD_ARG_FLAGS+=("--build-arg" "$arg")
   done

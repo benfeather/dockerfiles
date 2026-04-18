@@ -4,6 +4,7 @@ IMAGE ?=
 VERSION ?=
 TAGS ?=
 BASE ?= alpine:latest
+BUILD_ARGS ?=
 
 .PHONY: help list new tags build push release lint check-image check-version
 
@@ -13,9 +14,9 @@ help:
 		'  make list                                  List image folders' \
 		'  make new IMAGE=name [BASE=alpine:latest]   Create a new image folder' \
 		'  make tags IMAGE=name [VERSION=x] [TAGS=...] Print Docker tags' \
-		'  make build IMAGE=name VERSION=x [TAGS=...] Build locally' \
+		'  make build IMAGE=name VERSION=x [TAGS=...] [BUILD_ARGS=...] Build locally' \
 		'  make push IMAGE=name [VERSION=x] [TAGS=...] Push existing local tags and record version' \
-		'  make release IMAGE=name [VERSION=x] [TAGS=...] Build, push, and record next version' \
+		'  make release IMAGE=name [VERSION=x] [TAGS=...] [BUILD_ARGS=...] Build, push, and record next version' \
 		'  make lint                                  Run hadolint when installed'
 
 list:
@@ -28,13 +29,13 @@ tags: check-image
 	@TAGS="$(TAGS)" scripts/tags.sh "$(IMAGE)" "$(VERSION)"
 
 build: check-image check-version
-	@TAGS="$(TAGS)" scripts/build.sh "$(IMAGE)" "$(VERSION)"
+	@TAGS="$(TAGS)" EXTRA_BUILD_ARGS="$(BUILD_ARGS)" scripts/build.sh "$(IMAGE)" "$(VERSION)"
 
 push: check-image
 	@TAGS="$(TAGS)" scripts/push.sh "$(IMAGE)" "$(VERSION)"
 
 release: check-image
-	@TAGS="$(TAGS)" scripts/release.sh "$(IMAGE)" "$(VERSION)"
+	@TAGS="$(TAGS)" EXTRA_BUILD_ARGS="$(BUILD_ARGS)" scripts/release.sh "$(IMAGE)" "$(VERSION)"
 
 lint:
 	@if command -v hadolint >/dev/null 2>&1; then \
