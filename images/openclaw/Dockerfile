@@ -9,7 +9,7 @@ ARG CLAWHUB_VERSION=0
 ARG LOSSLESS_CLAW_VERSION=0
 
 LABEL org.opencontainers.image.title="openclaw" \
-      org.opencontainers.image.description="OpenClaw runtime image with ffmpeg and helper CLIs installed" \
+      org.opencontainers.image.description="OpenClaw runtime image with useful packages pre-installed" \
       org.opencontainers.image.version="${IMAGE_VERSION}"
 
 USER root
