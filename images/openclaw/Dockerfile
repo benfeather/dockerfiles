@@ -4,9 +4,9 @@ FROM ghcr.io/openclaw/openclaw:${OPENCLAW_VERSION}
 
 ARG IMAGE_VERSION=dev
 ARG FFMPEG_VERSION=7:*
-ARG SUMMARIZE_VERSION=0
-ARG CLAWHUB_VERSION=0
-ARG LOSSLESS_CLAW_VERSION=0
+ARG SUMMARIZE_VERSION=~0.13.0
+ARG CLAWHUB_VERSION=~0.9.0
+ARG QMD_VERSION=~2.1.0
 
 LABEL org.opencontainers.image.title="openclaw" \
       org.opencontainers.image.description="OpenClaw runtime image with useful packages pre-installed" \
@@ -23,16 +23,9 @@ RUN apt-get update \
 
 RUN npm install -g \
     @steipete/summarize@"${SUMMARIZE_VERSION}" \
+    @tobilu/qmd@"${QMD_VERSION}" \
     clawhub@"${CLAWHUB_VERSION}" \
   && \
   npm cache clean --force
 
 USER node
-
-RUN plugin_tgz="$(npm pack @martian-engineering/lossless-claw@"${LOSSLESS_CLAW_VERSION}" --pack-destination /tmp --silent)" \
-  && \
-  openclaw plugins install "/tmp/${plugin_tgz}" \
-  && \
-  rm -f "/tmp/${plugin_tgz}" \
-  && \
-  npm cache clean --force
