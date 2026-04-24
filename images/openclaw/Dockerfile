@@ -1,16 +1,14 @@
-ARG OPENCLAW_VERSION=2026.4.15
+ARG OPENCLAW_VERSION=2026.4.23
 
 FROM ghcr.io/openclaw/openclaw:${OPENCLAW_VERSION}
 
-ARG IMAGE_VERSION=dev
 ARG FFMPEG_VERSION=7:*
 ARG SUMMARIZE_VERSION=~0.13.0
 ARG CLAWHUB_VERSION=~0.9.0
 ARG QMD_VERSION=~2.1.0
 
 LABEL org.opencontainers.image.title="openclaw" \
-      org.opencontainers.image.description="OpenClaw runtime image with useful packages pre-installed" \
-      org.opencontainers.image.version="${IMAGE_VERSION}"
+      org.opencontainers.image.description="OpenClaw runtime image with useful packages pre-installed"
 
 USER root
 
