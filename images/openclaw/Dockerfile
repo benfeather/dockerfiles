@@ -1,11 +1,4 @@
-ARG OPENCLAW_VERSION=2026.4.24
-
-FROM ghcr.io/openclaw/openclaw:${OPENCLAW_VERSION}
-
-ARG FFMPEG_VERSION=7:*
-ARG SUMMARIZE_VERSION=~0.13.0
-ARG CLAWHUB_VERSION=~0.9.0
-ARG QMD_VERSION=~2.1.0
+FROM ghcr.io/openclaw/openclaw:2026.4.23-slim
 
 LABEL org.opencontainers.image.title="openclaw" \
       org.opencontainers.image.description="OpenClaw runtime image with useful packages pre-installed"
@@ -13,17 +6,16 @@ LABEL org.opencontainers.image.title="openclaw" \
 USER root
 
 RUN apt-get update \
-  && \
-  DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
-    ffmpeg="${FFMPEG_VERSION}" \
-  && \
-  rm -rf /var/lib/apt/lists/*
+    && \
+    DEBIAN_FRONTEND="noninteractive" apt-get install -y --no-install-recommends \
+      ffmpeg \
+    && \
+    rm -rf /var/lib/apt/lists/*
 
 RUN npm install -g \
-    @steipete/summarize@"${SUMMARIZE_VERSION}" \
-    @tobilu/qmd@"${QMD_VERSION}" \
-    clawhub@"${CLAWHUB_VERSION}" \
-  && \
-  npm cache clean --force
+      @steipete/summarize \
+      clawhub \
+    && \
+    npm cache clean --force
 
 USER node
