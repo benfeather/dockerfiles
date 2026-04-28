@@ -1,4 +1,4 @@
-FROM ghcr.io/openclaw/openclaw:2026.4.25-slim
+FROM ghcr.io/openclaw/openclaw:2026.4.26-slim
 
 LABEL org.opencontainers.image.title="openclaw" \
       org.opencontainers.image.description="OpenClaw runtime image with useful packages pre-installed"
