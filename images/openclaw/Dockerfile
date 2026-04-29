@@ -14,11 +14,12 @@ RUN apt-get update \
 
 RUN npm install -g \
       @steipete/summarize \
-      @types/node@24 \
+      @types/node@~24 \
       clawhub \
       oxfmt \
       oxlint \
-      typescript@6 \
+      pdfjs-dist \
+      typescript@~6 \
     && \
     npm cache clean --force
 
