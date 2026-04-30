@@ -1,4 +1,4 @@
-FROM ghcr.io/openclaw/openclaw:2026.4.26-slim
+FROM ghcr.io/openclaw/openclaw:2026.4.27-slim
 
 LABEL org.opencontainers.image.title="openclaw" \
       org.opencontainers.image.description="OpenClaw runtime image with useful packages pre-installed"
@@ -14,12 +14,11 @@ RUN apt-get update \
 
 RUN npm install -g \
       @steipete/summarize \
-      @types/node@~24 \
+      bun \
       clawhub \
       oxfmt \
       oxlint \
-      pdfjs-dist \
-      typescript@~6 \
+      typescript \
     && \
     npm cache clean --force
 
